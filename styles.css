@@ -1,3 +1,10 @@
 body {
     background-color: #0b802a;
 }
+
+.suit {
+    font-size: 2em;
+}
+.red {
+    color: red;
+}
