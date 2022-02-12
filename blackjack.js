@@ -42,9 +42,34 @@ class Deck {
             console.log(card);
         });
     }
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
 
-    //shuffleDeck
+    shuffleDeck() {
+        let currentDeck = this.cards;
+        let shuffledDeck = [];
+
+        while (currentDeck.length > 0) {
+            let randomNum = this.getRandomInt(currentDeck.length);
+            shuffledDeck.push(currentDeck[randomNum]);
+            currentDeck.splice(randomNum, 1);
+        }
+        //console.log(shuffledDeck);
+        this.cards = shuffledDeck;
+    }
 }
 
-let bjDeck = new Deck();
+class BlackjackDeck extends Deck {
+    getHandValue(playerHand) {
+        console.log(playerHand);
+    }
+}
+
+let bjDeck = new BlackjackDeck();
+// bjDeck.printDeck();
+// bjDeck.getHandValue("Hello");
+// console.log(bjDeck.getRandomInt());
+bjDeck.shuffleDeck();
 bjDeck.printDeck();
+console.log(bjDeck.cards.length);
