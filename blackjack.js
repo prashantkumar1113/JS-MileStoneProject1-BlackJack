@@ -31,10 +31,9 @@ class Deck {
 
     createDeck(numOfDecks) {
         for (let i = 0; i < cardsInOneDeck / 4; i++) {
-            this.cards.push(new Card(suits[0], deckRanks[i]));
-            this.cards.push(new Card(suits[1], deckRanks[i]));
-            this.cards.push(new Card(suits[2], deckRanks[i]));
-            this.cards.push(new Card(suits[3], deckRanks[i]));
+            for (let j = 0; j < 4; j++) {
+                this.cards.push(new Card(suits[j], deckRanks[i]));
+            }
         }
     }
     printDeck() {
@@ -60,16 +59,63 @@ class Deck {
     }
 }
 
-class BlackjackDeck extends Deck {
+// class BlackjackDeck extends Deck {
+//     constructor() {
+//         super();
+//     }
+//     getHandValue(playerHand) {
+//         console.log(playerHand);
+//     }
+// }
+
+class BlackjackGame {
+    constructor() {
+        this.playerHand = [];
+        this.dealerHand = [];
+        this.deck = new Deck();
+        this.deck.shuffleDeck();
+    }
+    //Need to grab DOM elements to append to
+
     getHandValue(playerHand) {
         console.log(playerHand);
     }
+
+    displayHand(cards, domElement) {
+        cards.forEach((card) => {
+            let cardElement = document.createElement("p");
+            cardElement.className = "card";
+            cardElement.textContent = card.rank + " " + card.suit;
+            domElement.appendChild(cardElement);
+        });
+    }
+
+    playGame() {
+        //first move
+        this.playerHand.push(this.deck.cards.pop());
+        this.dealerHand.push(this.deck.cards.pop());
+        this.playerHand.push(this.deck.cards.pop());
+        this.dealerHand.push(this.deck.cards.pop());
+        console.log(this.playerHand);
+        console.log(this.dealerHand);
+
+        //player gets to hit or stay
+        const playerHandDiv = document.getElementById("player-hand");
+        this.displayHand(this.playerHand, playerHandDiv);
+        const dealerHandDiv = document.getElementById("dealer-hand");
+        this.displayHand(this.dealerHand, dealerHandDiv);
+
+        //then dealer turn
+    }
 }
 
-let bjDeck = new BlackjackDeck();
+// let bjDeck = new Deck();
+// // bjDeck.printDeck();
+// // bjDeck.getHandValue("Hello");
+// // console.log(bjDeck.getRandomInt());
+// bjDeck.shuffleDeck();
 // bjDeck.printDeck();
-// bjDeck.getHandValue("Hello");
-// console.log(bjDeck.getRandomInt());
-bjDeck.shuffleDeck();
-bjDeck.printDeck();
-console.log(bjDeck.cards.length);
+// console.log(bjDeck.cards.length);
+
+let game = new BlackjackGame();
+game.playGame();
