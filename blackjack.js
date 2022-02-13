@@ -16,6 +16,23 @@ const deckRanks = [
 ];
 const suits = ["Spade", "Club", "Diamond", "Heart"];
 
+function suitToHtmlCode(suit) {
+    switch (suit) {
+        case "Spade":
+            return escape("&spades;");
+            break;
+        case "Club":
+            return "&#9827;";
+            break;
+        case "Diamond":
+            return "&#9830;";
+            break;
+        case "Heart":
+            return "&#9829;";
+            break;
+    }
+}
+
 class Card {
     constructor(suit, rank, value) {
         //suit: club, etc, rank: 9,10,J,Q,K,A, value: 10 for face cards
@@ -84,8 +101,10 @@ class BlackjackGame {
     displayHand(cards, domElement) {
         cards.forEach((card) => {
             let cardElement = document.createElement("p");
-            cardElement.className = "card";
-            cardElement.textContent = card.rank + " " + card.suit;
+            cardElement.className = `card ${card.suit.toLowerCase()}`;
+            cardElement.textContent = `${card.rank} ${suitToHtmlCode(
+                card.suit
+            )}`;
             domElement.appendChild(cardElement);
         });
     }
