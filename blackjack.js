@@ -86,7 +86,8 @@ class Deck {
 // }
 
 class BlackjackGame {
-    constructor() {
+    constructor(bankRoll) {
+        this.bankRoll = bankRoll;
         this.playerHand = [];
         this.dealerHand = [];
         this.deck = new Deck();
@@ -144,6 +145,23 @@ class BlackjackGame {
         console.log(this.playerHand);
         console.log(this.dealerHand);
 
+        //wire up the control buttons
+        const hitButton = document.getElementById("hit-button");
+        const stayButton = document.getElementById("stay-button");
+        const betButtons = document.querySelectorAll(".bet");
+
+        hitButton.addEventListener("click", (e) => {
+            alert("Hit button clicked");
+        });
+        stayButton.addEventListener("click", (e) => {
+            alert("Stay button clicked");
+        });
+        betButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                console.log(button.value);
+            });
+        });
+
         //player gets to hit or stay
         const playerHandDiv = document.getElementById("player-hand");
         this.displayHand(this.playerHand, playerHandDiv);
@@ -154,13 +172,5 @@ class BlackjackGame {
     }
 }
 
-// let bjDeck = new Deck();
-// // bjDeck.printDeck();
-// // bjDeck.getHandValue("Hello");
-// // console.log(bjDeck.getRandomInt());
-// bjDeck.shuffleDeck();
-// bjDeck.printDeck();
-// console.log(bjDeck.cards.length);
-
-let game = new BlackjackGame();
+let game = new BlackjackGame(1000);
 game.playGame();
