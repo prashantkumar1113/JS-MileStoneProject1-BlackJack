@@ -19,7 +19,7 @@ const suits = ["Spade", "Club", "Diamond", "Heart"];
 function suitToHtmlCode(suit) {
     switch (suit) {
         case "Spade":
-            return escape("&spades;");
+            return "&#9824;";
             break;
         case "Club":
             return "&#9827;";
@@ -100,11 +100,37 @@ class BlackjackGame {
 
     displayHand(cards, domElement) {
         cards.forEach((card) => {
-            let cardElement = document.createElement("p");
-            cardElement.className = `card ${card.suit.toLowerCase()}`;
-            cardElement.textContent = `${card.rank} ${suitToHtmlCode(
-                card.suit
-            )}`;
+            let cardElement = document.createElement("div");
+            if (card.suit === "Diamond" || card.suit === "Heart") {
+                cardElement.className = "card red"; //${card.suit.toLowerCase()}
+            } else {
+                cardElement.className = "card";
+            }
+            //create the card header
+            let cardHeader = document.createElement("div");
+            cardHeader.className = "card-header";
+            cardHeader.appendChild(document.createTextNode(card.rank));
+            cardElement.appendChild(cardHeader);
+
+            //create the card body
+            let cardBody = document.createElement("div");
+            cardBody.className = "card-body";
+            let suitSpan = document.createElement("span");
+            suitSpan.className = "suit";
+            suitSpan.textContent = card.suit.charAt(0);
+            cardBody.appendChild(suitSpan);
+            cardElement.appendChild(cardBody);
+
+            //create the card footer
+            let cardFooter = document.createElement("div");
+            cardFooter.className = "card-footer";
+            cardFooter.appendChild(document.createTextNode(card.rank));
+            cardElement.appendChild(cardFooter);
+
+            // cardElement.textContent = `${card.rank} ${suitToHtmlCode(
+            //     card.suit
+            // )}`;
+
             domElement.appendChild(cardElement);
         });
     }
