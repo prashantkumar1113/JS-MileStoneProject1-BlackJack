@@ -97,9 +97,22 @@ class BlackjackGame {
 
     getHandValue(playerHand) {
         console.log(playerHand);
+        let handValue = 0;
+        playerHand.forEach((card) => {
+            if (card.rank === "K" || card.rank === "Q" || card.rank === "Q") {
+                handValue += 10;
+            } else if (card.rank === "A") {
+                handValue += 11;
+            } else {
+                handValue += parseInt(card.rank);
+            }
+        });
+
+        return handValue;
     }
 
     displayHand(cards, domElement) {
+        domElement.innerHTML = "";
         cards.forEach((card) => {
             let cardElement = document.createElement("div");
             if (card.suit === "Diamond" || card.suit === "Heart") {
@@ -128,10 +141,6 @@ class BlackjackGame {
             cardFooter.appendChild(document.createTextNode(card.rank));
             cardElement.appendChild(cardFooter);
 
-            // cardElement.textContent = `${card.rank} ${suitToHtmlCode(
-            //     card.suit
-            // )}`;
-
             domElement.appendChild(cardElement);
         });
     }
@@ -142,8 +151,14 @@ class BlackjackGame {
         this.dealerHand.push(this.deck.cards.pop());
         this.playerHand.push(this.deck.cards.pop());
         this.dealerHand.push(this.deck.cards.pop());
-        console.log(this.playerHand);
-        console.log(this.dealerHand);
+        //console.log(this.playerHand);
+        //console.log(this.dealerHand);
+
+        //player gets to hit or stay
+        const playerHandDiv = document.getElementById("player-hand");
+        this.displayHand(this.playerHand, playerHandDiv);
+        const dealerHandDiv = document.getElementById("dealer-hand");
+        this.displayHand(this.dealerHand, dealerHandDiv);
 
         //wire up the control buttons
         const hitButton = document.getElementById("hit-button");
@@ -151,7 +166,9 @@ class BlackjackGame {
         const betButtons = document.querySelectorAll(".bet");
 
         hitButton.addEventListener("click", (e) => {
-            alert("Hit button clicked");
+            // alert("Hit button clicked");
+            this.playerHand.push(this.deck.cards.pop());
+            this.displayHand(this.playerHand, playerHandDiv);
         });
         stayButton.addEventListener("click", (e) => {
             alert("Stay button clicked");
@@ -162,12 +179,8 @@ class BlackjackGame {
             });
         });
 
-        //player gets to hit or stay
-        const playerHandDiv = document.getElementById("player-hand");
-        this.displayHand(this.playerHand, playerHandDiv);
-        const dealerHandDiv = document.getElementById("dealer-hand");
-        this.displayHand(this.dealerHand, dealerHandDiv);
-
+        console.log("Player Value: " + this.getHandValue(this.playerHand));
+        console.log("Dealer Value: " + this.getHandValue(this.dealerHand));
         //then dealer turn
     }
 }
