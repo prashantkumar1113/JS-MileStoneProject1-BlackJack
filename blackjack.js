@@ -23,6 +23,7 @@ function suitToHtmlCode(suit) {
             break;
         case "Club":
             return "&#9827;";
+            //return "♣️";
             break;
         case "Diamond":
             return "&#9830;";
@@ -120,27 +121,12 @@ class BlackjackGame {
             } else {
                 cardElement.className = "card";
             }
-            //create the card header
-            let cardHeader = document.createElement("div");
-            cardHeader.className = "card-header";
-            cardHeader.appendChild(document.createTextNode(card.rank));
-            cardElement.appendChild(cardHeader);
-
-            //create the card body
-            let cardBody = document.createElement("div");
-            cardBody.className = "card-body";
-            let suitSpan = document.createElement("span");
-            suitSpan.className = "suit";
-            suitSpan.textContent = card.suit.charAt(0);
-            cardBody.appendChild(suitSpan);
-            cardElement.appendChild(cardBody);
-
-            //create the card footer
-            let cardFooter = document.createElement("div");
-            cardFooter.className = "card-footer";
-            cardFooter.appendChild(document.createTextNode(card.rank));
-            cardElement.appendChild(cardFooter);
-
+            cardElement.innerHTML = `
+            <div class='card-header'>${card.rank}</div>
+             <div class='card-body'>
+                <span class='suit'>${suitToHtmlCode(card.suit)}</span>
+             </div>
+             <div class='card-footer'>${card.rank}</div>`;
             domElement.appendChild(cardElement);
         });
     }
