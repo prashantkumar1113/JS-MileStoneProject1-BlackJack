@@ -100,7 +100,7 @@ class BlackjackGame {
         console.log(playerHand);
         let handValue = 0;
         playerHand.forEach((card) => {
-            if (card.rank === "K" || card.rank === "Q" || card.rank === "Q") {
+            if (card.rank === "K" || card.rank === "Q" || card.rank === "J") {
                 handValue += 10;
             } else if (card.rank === "A") {
                 handValue += 11;
@@ -112,9 +112,23 @@ class BlackjackGame {
         return handValue;
     }
 
-    displayHand(cards, domElement) {
+    displayHand(cards, domElement, isDealersFirstHand) {
+        let currentCards = [...cards];
+        console.log(currentCards);
         domElement.innerHTML = "";
-        cards.forEach((card) => {
+
+        //hide one of the dealers cards
+        if (isDealersFirstHand) {
+            currentCards.pop();
+            let cardElement = document.createElement("div");
+            cardElement.className = "card card-back";
+            cardElement.innerHTML = `
+            <div class='card-header'> \` </div>
+            <div class='card-body'> ' </div>
+            <div class='card-footer'> \` </div>`;
+            domElement.appendChild(cardElement);
+        }
+        currentCards.forEach((card) => {
             let cardElement = document.createElement("div");
             if (card.suit === "Diamond" || card.suit === "Heart") {
                 cardElement.className = "card red"; //${card.suit.toLowerCase()}
@@ -142,9 +156,9 @@ class BlackjackGame {
 
         //player gets to hit or stay
         const playerHandDiv = document.getElementById("player-hand");
-        this.displayHand(this.playerHand, playerHandDiv);
+        this.displayHand(this.playerHand, playerHandDiv, false);
         const dealerHandDiv = document.getElementById("dealer-hand");
-        this.displayHand(this.dealerHand, dealerHandDiv);
+        this.displayHand(this.dealerHand, dealerHandDiv, true);
 
         //wire up the control buttons
         const hitButton = document.getElementById("hit-button");
@@ -154,7 +168,7 @@ class BlackjackGame {
         hitButton.addEventListener("click", (e) => {
             // alert("Hit button clicked");
             this.playerHand.push(this.deck.cards.pop());
-            this.displayHand(this.playerHand, playerHandDiv);
+            this.displayHand(this.playerHand, playerHandDiv, false);
         });
         stayButton.addEventListener("click", (e) => {
             alert("Stay button clicked");
