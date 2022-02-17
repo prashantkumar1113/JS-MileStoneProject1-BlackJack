@@ -13,7 +13,7 @@
     - Display a card with a suit
     - hide the dealers second card
     - Keep track of the bets from game to game
-    - Need to account for Aces being 1 or 13 depending on the value of the hand
+    - Need to account for Aces being 1 or 11 depending on the value of the hand
 
 ### Stretch Goals
 
