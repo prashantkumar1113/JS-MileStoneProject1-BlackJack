@@ -118,9 +118,27 @@ class BlackjackGame {
         }
         instructions.innerHTML = statusMessage;
         bankRollElement.textContent = `$${this.bankRoll}`;
-        // new BlackjackGame(this.bankRoll);
-        console.log("HERE");
-        // this.newDeal();
+
+        // this.playerHand = [];
+        // this.dealerHand = [];
+        // this.deck = new Deck();
+        // this.deck.shuffleDeck();
+        // this.betAmount = 0;
+        // this.getStats();
+        // hitButton.style.visibility = "hidden";
+        // stayButton.style.visibility = "hidden";
+        // dealButton.style.visibility = "visible";
+        // dealButton.disabled = true;
+        this.newDeal();
+    }
+
+    getStats() {
+        console.log("Deck");
+        console.log(this.deck);
+        console.log("Player hand");
+        console.log(this.playerHand);
+        console.log("Dealer hand");
+        console.log(this.dealerHand);
     }
 
     newDeal() {
@@ -128,30 +146,15 @@ class BlackjackGame {
         // and the bet
         // hide the deal and beat buttons
         // make visible the hit and stay (and split)
-
-        // this.playerHand = [];
-        // this.dealerHand = [];
-        // this.deck = new Deck();
-        // this.deck.shuffleDeck();
-        // this.betAmount = 0;
+        this.playerHand = [];
+        this.dealerHand = [];
+        this.deck = new Deck();
+        this.deck.shuffleDeck();
+        this.betAmount = 0;
         // hitButton.style.visibility = "hidden";
         // stayButton.style.visibility = "hidden";
-        // dealButton.style.visibility = "visible";
-        // dealButton.disabled = true;
-
-        betButtons.forEach((button) => {
-            button.addEventListener("click", (e) => {
-                this.betAmount += parseInt(button.value);
-                dealButton.disabled = false;
-                console.log(this.betAmount);
-            });
-        });
-        dealButton.addEventListener("click", (e) => {
-            dealButton.style.visibility = "hidden";
-            hitButton.style.visibility = "visible";
-            stayButton.style.visibility = "visible";
-            this.playerTurn();
-        });
+        dealButton.style.visibility = "visible";
+        dealButton.disabled = true;
     }
 
     playerTurn() {
@@ -161,24 +164,13 @@ class BlackjackGame {
         this.playerHand.push(this.deck.cards.pop());
         this.dealerHand.push(this.deck.cards.pop());
         // console.log(this.playerHand);
-        console.log(this.dealerHand);
+        this.getStats();
 
         //Display hands
         this.displayHand(this.playerHand, "player", false);
         //this.displayHandValue(this.playerHand, playerStatusElement);
         this.displayHand(this.dealerHand, "dealer", true);
         this.checkForBlackjack();
-        //wire up the control buttons
-        hitButton.addEventListener("click", (e) => {
-            this.playerHand.push(this.deck.cards.pop());
-            this.displayHand(this.playerHand, "player", false);
-            this.displayHandValue(this.playerHand, playerStatusElement);
-            this.checkForPlayerWin();
-        });
-        stayButton.addEventListener("click", (e) => {
-            //Dealer turn
-            this.dealerTurn();
-        });
     }
 
     dealerTurn() {
@@ -207,23 +199,24 @@ class BlackjackGame {
         let dealerHandValue = this.getHandValue(this.dealerHand);
 
         if (playerHandValue === 21 && dealerHandValue === 21) {
-            this.updateStatus("Both have Blackjack Push", "push", false);
             this.displayHand(this.dealerHand, "dealer", false);
+            this.updateStatus("Both have Blackjack Push", "push", false);
         } else if (playerHandValue === 21) {
+            this.displayHand(this.dealerHand, "dealer", false);
             this.updateStatus(
                 "You have Blackjack! You win.",
                 "player wins",
                 true
             );
-            this.displayHand(this.dealerHand, "dealer", false);
+
             //this.newDeal();
         } else if (dealerHandValue === 21) {
+            this.displayHand(this.dealerHand, "dealer", false);
             this.updateStatus(
                 "Dealer has Blackjack! You lose.",
                 "dealer wins",
                 false
             );
-            this.displayHand(this.dealerHand, "dealer", false);
         }
     }
     checkForPlayerWin() {
@@ -232,11 +225,39 @@ class BlackjackGame {
         if (playerHandValue === 21) {
             this.dealerTurn();
         } else if (playerHandValue > 21) {
-            this.updateStatus("You busted! You lose.", "dealer wins", false);
             this.displayHand(this.dealerHand, "dealer", false);
+            this.updateStatus("You busted! You lose.", "dealer wins", false);
         }
     }
 }
 
 let game = new BlackjackGame(1000);
+//wire up the control buttons
+betButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        game.betAmount += parseInt(button.value);
+        dealButton.disabled = false;
+        console.log(game.betAmount);
+        instructions.innerHTML = "Your bet is $" + game.betAmount;
+    });
+});
+dealButton.addEventListener("click", (e) => {
+    dealButton.style.visibility = "hidden";
+    hitButton.style.visibility = "visible";
+    stayButton.style.visibility = "visible";
+    instructions.innerHTML = "Your bet is $" + game.betAmount;
+    game.playerTurn();
+});
+hitButton.addEventListener("click", (e) => {
+    game.playerHand.push(game.deck.cards.pop());
+    game.displayHand(game.playerHand, "player", false);
+    //this.displayHandValue(this.playerHand, playerStatusElement);
+    game.checkForPlayerWin();
+});
+stayButton.addEventListener("click", (e) => {
+    //Dealer turn
+    hitButton.style.visibility = "hidden";
+    stayButton.style.visibility = "hidden";
+    game.dealerTurn();
+});
 game.newDeal();
