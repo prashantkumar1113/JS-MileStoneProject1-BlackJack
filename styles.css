@@ -118,7 +118,7 @@ button:disabled {
     /* transform: rotate(180deg); */
 }
 .suit {
-    font-size: 3em;
+    font-size: 2.5em;
     position: relative;
-    top: 20px;
+    top: 25px;
 }

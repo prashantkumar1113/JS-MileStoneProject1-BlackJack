@@ -10,6 +10,8 @@ const playerStatusElement = document.getElementById("player-status");
 const dealerStatusElement = document.getElementById("dealer-status");
 const instructions = document.getElementById("instructions");
 const bankRollElement = document.getElementById("bankroll");
+const cardDealtSound = new Audio("./assets/card game play 7.wav");
+const chipBetSound = new Audio("./assets/chips bet.wav");
 
 class BlackjackGame {
     constructor(bankRoll) {
@@ -141,6 +143,7 @@ class BlackjackGame {
         this.dealerHand.push(this.deck.cards.pop());
         this.playerHand.push(this.deck.cards.pop());
         this.dealerHand.push(this.deck.cards.pop());
+        cardDealtSound.play();
 
         //Display hands
         this.displayHand(this.playerHand, "player", false);
@@ -151,9 +154,11 @@ class BlackjackGame {
     dealerTurn() {
         this.dealerGameView();
         this.displayHand(this.dealerHand, "dealer", false);
+        cardDealtSound.play();
 
         while (this.getHandValue(this.dealerHand) < 17) {
             this.dealerHand.push(this.deck.cards.pop());
+            cardDealtSound.play();
             this.displayHand(this.dealerHand, "dealer", false);
         }
         let playerHandValue = this.getHandValue(this.playerHand);
@@ -245,6 +250,7 @@ dealButton.addEventListener("click", (e) => {
 betButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
         game.betAmount += parseInt(button.value);
+        chipBetSound.play();
         dealButton.disabled = false;
         console.log(game.betAmount);
         instructions.innerHTML = "Your bet is $" + game.betAmount;
@@ -252,6 +258,7 @@ betButtons.forEach((button) => {
 });
 hitButton.addEventListener("click", (e) => {
     game.playerHand.push(game.deck.cards.pop());
+    cardDealtSound.play();
     game.displayHand(game.playerHand, "player", false);
     game.checkForPlayerWin();
 });
