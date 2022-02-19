@@ -91,6 +91,9 @@ button:disabled {
     box-shadow: 3px 3px 5px #000;
     display: inline-block;
 }
+.card:not(:first-child) {
+    margin-left: -40px;
+}
 .card-header,
 .card-footer {
     border: none;
