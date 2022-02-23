@@ -1,0 +1,25 @@
+{
+    "name": "js-milestoneproject1-blackjack",
+    "version": "1.0.0",
+    "description": "## My version of Blackjack for Milestone Project 1",
+    "main": "blackjack.js",
+    "type": "module",
+    "scripts": {
+        "start": "live-server --port=8000",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/prashantkumar1113/JS-MileStoneProject1-BlackJack.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/prashantkumar1113/JS-MileStoneProject1-BlackJack/issues"
+    },
+    "homepage": "https://github.com/prashantkumar1113/JS-MileStoneProject1-BlackJack#readme",
+    "dependencies": {
+        "live-server": "^1.2.1",
+        "ws": "^8.5.0"
+    }
+}

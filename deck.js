@@ -1,5 +1,5 @@
-const cardsInOneDeck = 52;
-const deckRanks = [
+const CARDS_IN_A_DECK = 52;
+const DECK_RANKS = [
     "2",
     "3",
     "4",
@@ -14,7 +14,7 @@ const deckRanks = [
     "K",
     "A",
 ];
-const suits = ["Spade", "Club", "Diamond", "Heart"];
+const SUITS = ["Spade", "Club", "Diamond", "Heart"];
 
 function suitToHtmlCode(suit) {
     switch (suit) {
@@ -48,9 +48,9 @@ class Deck {
     }
 
     createDeck() {
-        for (let i = 0; i < cardsInOneDeck / 4; i++) {
+        for (let i = 0; i < CARDS_IN_A_DECK / 4; i++) {
             for (let j = 0; j < 4; j++) {
-                this.cards.push(new Card(suits[j], deckRanks[i]));
+                this.cards.push(new Card(SUITS[j], DECK_RANKS[i]));
             }
         }
     }
@@ -76,3 +76,4 @@ class Deck {
         this.cards = shuffledDeck;
     }
 }
+export default Deck;

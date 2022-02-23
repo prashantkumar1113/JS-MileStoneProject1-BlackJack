@@ -19,9 +19,10 @@
     <body>
         <div class="container">
             <h2>Blackjack Pays 3 to 2</h2>
-            <h2>Dealer Hand <span class="status" id="dealer-status"></span></h2>
+            <!-- <h2>Dealer Hand <span class="status" id="dealer-status"></span></h2> -->
+            <h2 id="num-of-players">Waiting for Players: 0</h2>
             <div id="dealer-hand">
-                <div class="card card-back">
+                <!-- <div class="card card-back">
                     <div class='card-header'> ` </div>
                     <div class='card-body'> ' </div>
                     <div class='card-footer'> ` </div>
@@ -30,11 +31,11 @@
                     <div class='card-header'> ` </div>
                     <div class='card-body'> ' </div>
                     <div class='card-footer'> ` </div>
-                </div>
+                </div> -->
             </div>
-            <h2>My Hand <span class="status" id="player-status"></span></h2>
+            <!-- <h2>My Hand <span class="status" id="player-status"></span></h2> -->
             <div id="player-hand">
-                <div class="card card-back">
+                <!-- <div class="card card-back">
                     <div class='card-header'> ` </div>
                     <div class='card-body'> ' </div>
                     <div class='card-footer'> ` </div>
@@ -44,8 +45,8 @@
                     <div class='card-body'> ' </div>
                     <div class='card-footer'> ` </div>
                 </div>
-            </div>
-            <div id="controls">
+            </div> -->
+            <!-- <div id="controls">
                 <button id="deal-button">Deal</button>
                 <button id="hit-button">Hit</button>
                 <button id="stay-button">Stay</button>
@@ -54,7 +55,9 @@
                 <button id="bet-100" class="bet" value="100">$100</button>
             </div>
             <h2 id="instructions">First place your bet, then deal</h2>
-            <h2>Bankroll: <span id="bankroll">$1000</span></h2>
+            <h2>Bankroll: <span id="bankroll">$1000</span></h2> -->
+
+
              <!-- <div class="card card-back">
 
             </div> -->
@@ -73,5 +76,6 @@
         </div>
         <script src="./deck.js"></script>
         <script src="./blackjack.js"></script>
+        <script src="./BlackjackClient.js"></script>
     </body>
 </html>
