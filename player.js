@@ -1,7 +1,7 @@
 class Player {
     constructor(bankRoll) {
-        this.hand = [];
-        this.bed = 0;
+        this.cards = [];
+        this.bet = 0;
         this.bankRoll = bankRoll;
     }
 }
